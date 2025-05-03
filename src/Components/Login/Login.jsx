@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Link } from 'react-router';
+import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
 
 const Login = () => {
+    const { signInUser } = use(AuthContext);
     const handleLogin = e => {
-        e.preventDefault(); 
-        const email = e.target.email.value; 
-        const password = e.target.password.value; 
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
         console.log(email, password)
+
+        // Sign in user 
+        signInUser(email, password)
+            .then(userCredential => console.log(userCredential))
+            .catch(error => console.log(error))
     }
     return (
         <div className="card bg-base-100 mx-auto mt-10 w-full max-w-sm shrink-0 shadow-2xl">
