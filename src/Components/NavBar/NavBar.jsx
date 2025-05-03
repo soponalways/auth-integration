@@ -3,14 +3,31 @@ import { Link, NavLink } from 'react-router';
 import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
 
 const NavBar = () => {
+        const { user, signOutUser } = use(AuthContext); 
+        console.log(user)
+
     const listItem = <>
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/Login'>Login</NavLink></li>
         <li><NavLink to='/SignUp'>Sign Up</NavLink></li>
+        {
+            user? <>
+            <li><NavLink to='/orders' >Orders</NavLink></li>
+            <li><NavLink to='/profile' >Profile</NavLink></li>
+             </> : <></>
+        }
     </>
 
-    const {user} = use(AuthContext); 
-    console.log(user)
+
+    const signOutHandler = () => {
+        signOutUser()
+        .then(() => {
+            console.log("Sign Out successfull")
+        })
+        .catch (error => {
+            console.log(error)
+        })
+    }
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
@@ -32,7 +49,7 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                {user ? <a className="btn">Sign Out</a> : <Link to='/Login'>Login</Link>}
+                {user ? <a onClick={signOutHandler} className="btn">Sign Out</a> : <Link to='/Login'>Login</Link>}
             </div>
         </div>
     );
