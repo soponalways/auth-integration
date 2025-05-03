@@ -1,13 +1,24 @@
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React from 'react';
 import { Link } from 'react-router';
+import { auth } from '../../firebase.init';
 
 const SignUp = () => {
     const handleSignUp = e => {
-        e.preventDefault() ; 
-        const name = e.target.name.value; 
-        const email = e.target.email.value ; 
-        const password = e.target.password.value; 
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const password = e.target.password.value;
         console.log(name, email, password)
+
+        // create User
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+            console.log(userCredential)
+        })
+        .catch(error => {
+            console.log(error)
+        })
     }
     return (
         <div className="card bg-base-100 mx-auto mt-10 w-full max-w-sm shrink-0 shadow-2xl">
