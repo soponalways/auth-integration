@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import { NavLink } from 'react-router';
+import { Link, NavLink } from 'react-router';
 import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
 
 const NavBar = () => {
@@ -9,8 +9,8 @@ const NavBar = () => {
         <li><NavLink to='/SignUp'>Sign Up</NavLink></li>
     </>
 
-    const userInfo = use(AuthContext); 
-    console.log(userInfo)
+    const {user} = use(AuthContext); 
+    console.log(user)
     return (
         <div className="navbar bg-base-100 shadow-sm">
             <div className="navbar-start">
@@ -32,7 +32,7 @@ const NavBar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <a className="btn">Button</a>
+                {user ? <a className="btn">Sign Out</a> : <Link to='/Login'>Login</Link>}
             </div>
         </div>
     );
