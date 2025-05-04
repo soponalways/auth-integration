@@ -3,7 +3,7 @@ import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
 
 const Profile = () => {
     const {user} = use(AuthContext); 
-    console.log(user)
+    // console.log(user)
     return (
         <div>
             <h1>{user?.email}</h1>

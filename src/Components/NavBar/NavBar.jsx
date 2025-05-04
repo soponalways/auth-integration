@@ -4,7 +4,7 @@ import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
 
 const NavBar = () => {
         const { user, signOutUser } = use(AuthContext); 
-        console.log(user)
+        // console.log(user)
 
     const listItem = <>
         <li><NavLink to='/'>Home</NavLink></li>
