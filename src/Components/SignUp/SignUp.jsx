@@ -1,12 +1,15 @@
 // import { createUserWithEmailAndPassword } from 'firebase/auth';
 import React, { use } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
+import { useLocation } from 'react-router';
 // import { auth } from '../../firebase.init';
 
 const SignUp = () => {
     const { createUser } = use(AuthContext)
-
+    const location = useLocation(); 
+    const navigate = useNavigate(); 
+    
     const handleSignUp = e => {
         e.preventDefault();
         const name = e.target.name.value;
@@ -25,7 +28,8 @@ const SignUp = () => {
 
         createUser(email,password)
         .then(userCredential => {
-            console.log(userCredential)
+            console.log(userCredential); 
+            navigate(location.state || '/')
         })
         .catch(error => {
             console.log(error)

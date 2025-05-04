@@ -1,9 +1,13 @@
 import React, { use } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../../FirebaseAuthContext/AuthContext';
 
 const Login = () => {
     const { signInUser } = use(AuthContext);
+    const navigate = useNavigate(); 
+    const location  = useLocation(); 
+    console.log(location)
+
     const handleLogin = e => {
         e.preventDefault();
         const email = e.target.email.value;
@@ -12,7 +16,10 @@ const Login = () => {
 
         // Sign in user 
         signInUser(email, password)
-            .then(userCredential => console.log(userCredential))
+            .then(userCredential => {
+                console.log(userCredential); 
+                navigate(location.state || '/')
+            })
             .catch(error => console.log(error))
     }
     return (
