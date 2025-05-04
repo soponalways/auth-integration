@@ -3,23 +3,28 @@ import { AuthContext } from './AuthContext';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase.init';
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({children}) => { 
+    const [loading, setLoading ] = useState(true); 
     const [user , setUser] = useState(null); 
     const createUser = (email, password) => {
+        setLoading(false)
         return createUserWithEmailAndPassword(auth, email, password )
     }
     const signInUser = (email, password) => {
+        setLoading(false)
         return signInWithEmailAndPassword(auth, email, password)
     }; 
     const signOutUser  = () => {
+        setLoading(false)
         return signOut(auth)
     }
     const userInfo = {
         // email: 'soponislam132s@gmail.com'
         user,
+        loading,
         createUser, 
         signInUser, 
-        signOutUser
+        signOutUser, 
     }
 
     // onAuthStateChanged(auth, currentUser => {
@@ -33,6 +38,7 @@ const AuthProvider = ({children}) => {
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
             console.log("inside useEffect the on auth state change " ,currentUser)
+            setLoading(false); 
             setUser(currentUser)
         }); 
         return () => {
